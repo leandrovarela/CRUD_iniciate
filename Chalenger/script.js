@@ -76,20 +76,26 @@ const listenProductbyName = (inputname) => {
     productStock.find((nameProduct) => nameProduct.name === inputname)
   );
 };
-const updateProduct = (id, updateItem) => {
-  let productFinder = productStock.find(
-    (nameProduct) => nameProduct.name === id
-  );
-  if (productFinder != updateItem) productStock[id] = updateItem;
+const updateProduct = (id, newProduct) => {
+  let oldProduct = productStock[id];
+
+  if (oldProduct != newProduct) {
+    //
+    productStock[id] = newProduct;
+  }
 };
 
 deleteProduct(1);
 updateProduct(3, {
-  barcode: 5556897,
-  name: "Jacarandu",
-  description: "Used for trasation",
-  amount: 50,
-  category: "School supplies",
+  description: "Jacarandu",
 });
+
+updateProduct(
+  0,
+  {
+    name: "Lukita",
+  } + oldProduct
+);
+
 listenProduct();
-listenProductbyName("Pencil");
+listenProductbyName("Schedule");

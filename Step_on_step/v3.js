@@ -16,6 +16,12 @@
 // deletar esse contato usandoa funcao criada pelo index.
 // imprimir todos os contatos e verificar se foi removido.
 // **************************************************
+//v3
+// criar uma funcao capaz de atualizar a informacoes de um contato,
+// passando: index, atributo (que sera alterado) e o novo valor.
+// imprimir todos os contatos e verificar se foi alterado.
+// Update
+// **************************************************
 
 const scheduler = [];
 
@@ -34,8 +40,9 @@ registration_scheduler("Varela", "21717171717", "Varelitadagalera@piraca.com");
 
 registration_scheduler("Bob", "21717171717", "bobdagalera@piraca.com");
 
+registration_scheduler("Melynx", "21717171717", "memedagalera@piraca.com");
 function display_contacts() {
-  console.log(scheduler);
+  console.table(scheduler);
 }
 
 display_contacts(scheduler);
@@ -43,14 +50,22 @@ display_contacts(scheduler);
 const deleteContact = (index) => {
   scheduler.splice(index, 1);
   console.log("**---- Contato removido ----**");
-  console.log(scheduler);
+  console.table(scheduler);
 };
 
 const printContact = (index) => {
   console.log("**------ Contato Impresso ------***");
-  console.log(scheduler[index]);
+  console.table(scheduler[index]);
 };
 
 printContact(2);
 
 deleteContact(1);
+
+const updateContact = (id, attribute, value) => {
+  scheduler[id][attribute] = value;
+};
+updateContact(0, "name", "Joana");
+updateContact(1, "telphone", 21727272727);
+
+display_contacts(scheduler);
