@@ -64,9 +64,10 @@ const table = [
 console.table(table);
 let input = require("prompt-sync")();
 let valueOption = input("Select Your Option : ");
-while (valueOption !== 0) {
-  console.log(`"Your option selected is ${table[valueKeyboard]}`);
-}
+console.log(`"Your option selected is ${table[valueKeyboard]}`);
+// while (valueOption !== 0) {
+
+// }
 switch (valueKeyboard) {
   case "1":
     const registration_scheduler = (name, telphone, email) => {
