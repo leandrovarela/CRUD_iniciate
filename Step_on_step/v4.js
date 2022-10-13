@@ -61,67 +61,83 @@ const table = [
   "5. Update",
   "Z. Finish",
 ];
+
+//Create Contact
+const registration_scheduler = (name, telphone, email) => {
+  const newUser = {
+    name,
+    telphone,
+    email,
+  };
+  scheduler.push(newUser);
+};
+//Read All
+function display_contacts() {
+  console.table(scheduler);
+}
+//Read One
+const printContact = (index) => {
+  console.log("**------ Contato Impresso ------***");
+  console.table(scheduler[index]);
+};
+//Delete
+const deleteContact = (index) => {
+  scheduler.splice(index, 1);
+  console.log("**---- Contato removido ----**");
+  console.table(scheduler);
+};
+//Update
+const updateContact = (id, attribute, value) => {
+  scheduler[id][attribute] = value;
+  console.table(scheduler);
+};
+
 console.table(table);
+
+let finshedProgram = ["z", "Z"];
+
+// Import Lib Prompt for Input
+
 let input = require("prompt-sync")();
 let valueOption = input("Select Your Option : ");
-console.log(`"Your option selected is ${table[valueOption]}`);
-// while (valueOption !== 0) {
 
-// }
 switch (valueOption) {
   case "1":
-    const registration_scheduler = (name, telphone, email) => {
-      const newUser = {
-        name,
-        telphone,
-        email,
-      };
-      scheduler.push(newUser);
-    };
-
+    console.log(`Your option selected is ${table[valueOption]}`);
     registration_scheduler("Bob", "21717171717", "bobdagalera@piraca.com");
 
     registration_scheduler("Melynx", "21717171717", "memedagalera@piraca.com");
+
+    display_contacts(scheduler);
+
     break;
 
   case "2":
-    function display_contacts() {
-      console.table(scheduler);
-    }
+    console.log(`Your option selected is ${table[valueOption]}`);
     display_contacts(scheduler);
     break;
 
   case "3":
-    const printContact = (index) => {
-      console.log("**------ Contato Impresso ------***");
-      console.table(scheduler[index]);
-    };
-
+    console.log(`Your option selected is ${table[valueOption]}`);
     printContact(1);
     break;
 
   case "4":
-    const deleteContact = (index) => {
-      scheduler.splice(index, 1);
-      console.log("**---- Contato removido ----**");
-      console.table(scheduler);
-    };
+    console.log(`Your option selected is ${table[valueOption]}`);
     deleteContact(1);
     break;
 
   case "5":
-    const updateContact = (id, attribute, value) => {
-      scheduler[id][attribute] = value;
-    };
-
+    console.log(`Your option selected is ${table[valueOption]}`);
     updateContact(0, "name", "Joana");
     updateContact(1, "telphone", 21727272727);
-    console.table(scheduler);
-    break;
 
-  case ("Z", "z"):
+  case "Z":
+    console.log(`Your option selected is ${table[valueOption]}`);
     break;
 
   default:
     console.log("Your option selected don't exist.");
 }
+
+//}
