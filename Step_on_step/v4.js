@@ -119,6 +119,9 @@ switch (valueOption) {
     console.table(scheduler);
     break;
 
+  case ("Z", "z"):
+    break;
+
   default:
     console.log("Your option selected don't exist.");
 }
