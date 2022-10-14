@@ -39,105 +39,69 @@
 // Implementar funcionalidade de fechar menu, quando digitar Z ou z.
 // Recursos utilizados: require, dependencie, let, while, switch
 
-const scheduler = [
-  {
-    name: "Lukita",
-    telphone: 21717171717,
-    email: "lukitadagalera@piraca.com",
-  },
-  {
-    name: "Varela",
-    telphone: 21717171717,
-    email: "Varelitadagalera@piraca.com",
-  },
-];
+console.log("///////////////////////////////");
+console.log("///////////MENU///////////////");
+console.log("///////////////////////////////");
+console.log("1. CREATE");
+console.log("2. READ ALL");
+console.log("3. READ ONE");
+console.log("4. DELETE");
+console.log("5. UPDATE");
 
-const table = [
-  "Menu",
-  "1. Create",
-  "2. Read:All",
-  "3. Read:One",
-  "4. Delete",
-  "5. Update",
-  "Z. Finish",
-];
-const exceptionStrings = ["z", "Z"];
-//Create Contact
-const registration_scheduler = (name, telphone, email) => {
-  const newUser = {
-    name,
-    telphone,
-    email,
-  };
-  scheduler.push(newUser);
-};
-//Read All
-const display_contacts = () => {
-  console.table(scheduler);
-};
-//Read One
-const printContact = (index) => {
-  console.log("**------ Contato Impresso ------***");
-  console.table(scheduler[index]);
-};
-//Delete
-const deleteContact = (index) => {
-  scheduler.splice(index, 1);
-  console.log("**---- Contato removido ----**");
-  console.table(scheduler);
-};
-//Update
-const updateContact = (id, attribute, value) => {
-  scheduler[id][attribute] = value;
-  console.table(scheduler);
-};
-// Function for print menssage
 const printMessage = () => {
-  console.log(`Your option selected is ${table[valueOption]}`);
+  console.log(`Your option selected is ${inputKeyboard}`);
 };
-console.table(table);
-
-// Import Lib Prompt for Input
-
+const jumpLine = () => {
+  console.log("");
+};
 let input = require("prompt-sync")();
-let valueOption = input("Select Your Option : ").toLowerCase();
-do {
-  switch (valueOption) {
+
+let inputKeyboard = "";
+
+while (inputKeyboard !== "z") {
+  switch (inputKeyboard) {
     case "1":
+      jumpLine();
       printMessage();
-      registration_scheduler("Bob", "21717171717", "bobdagalera@piraca.com");
-
-      registration_scheduler(
-        "Melynx",
-        "21717171717",
-        "memedagalera@piraca.com"
-      );
-      console.table(scheduler);
+      jumpLine();
+      console.log("You create your contact");
+      jumpLine();
       break;
-
     case "2":
+      jumpLine();
       printMessage();
-      display_contacts();
+      jumpLine();
+      console.log("You read all contacts");
+      jumpLine();
       break;
-
     case "3":
+      jumpLine();
       printMessage();
-      printContact(1);
+      jumpLine();
+      console.log("You read one contact");
+      jumpLine();
       break;
-
     case "4":
+      jumpLine();
       printMessage();
-      deleteContact(1);
+      jumpLine();
+      console.log("You deleted one contact");
+      jumpLine();
       break;
-
     case "5":
+      jumpLine();
       printMessage();
-      updateContact(0, "name", "Joana");
-      updateContact(1, "telphone", 21727272727);
+      jumpLine();
+      console.log("You update one contact");
+      jumpLine();
       break;
     default:
-      console.log("Your option selected don't exist.");
+      if (inputKeyboard !== "") {
+        jumpLine();
+        console.log("Your option selected don't exist.");
+        jumpLine();
+      }
       break;
   }
-  valueOption = input("Select Your Option : ").toLowerCase();
-} while (valueOption !== "z");
+  inputKeyboard = input("Select Your Option : ").toLowerCase();
+}
