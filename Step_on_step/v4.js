@@ -72,26 +72,29 @@ const registration_scheduler = (name, telphone, email) => {
   scheduler.push(newUser);
 };
 //Read All
-function display_contacts() {
-  console.table(scheduler);
+const display_contacts = () => console.table(scheduler);
+{
 }
 //Read One
-const printContact = (index) => {
+const printContact = (index) => console.table(scheduler[index]);
+{
   console.log("**------ Contato Impresso ------***");
-  console.table(scheduler[index]);
-};
+}
 //Delete
-const deleteContact = (index) => {
+const deleteContact = (index) => console.table(scheduler);
+{
   scheduler.splice(index, 1);
   console.log("**---- Contato removido ----**");
-  console.table(scheduler);
-};
+}
 //Update
-const updateContact = (id, attribute, value) => {
+const updateContact = (id, attribute, value) => console.table(scheduler);
+{
   scheduler[id][attribute] = value;
-  console.table(scheduler);
+}
+// Function for print menssage
+const printMessage = () => {
+  console.log(`Your option selected is ${table[valueOption]}`);
 };
-
 console.table(table);
 
 let finshedProgram = ["z", "Z"];
@@ -103,37 +106,35 @@ let valueOption = input("Select Your Option : ");
 
 switch (valueOption) {
   case "1":
-    console.log(`Your option selected is ${table[valueOption]}`);
+    printMessage();
     registration_scheduler("Bob", "21717171717", "bobdagalera@piraca.com");
 
     registration_scheduler("Melynx", "21717171717", "memedagalera@piraca.com");
-
-    display_contacts(scheduler);
-
+    console.log(scheduler);
     break;
 
   case "2":
+    printMessage();
     console.log(`Your option selected is ${table[valueOption]}`);
-    display_contacts(scheduler);
+    display_contacts();
     break;
 
   case "3":
-    console.log(`Your option selected is ${table[valueOption]}`);
+    printMessage();
     printContact(1);
     break;
 
   case "4":
-    console.log(`Your option selected is ${table[valueOption]}`);
+    printMessage();
     deleteContact(1);
     break;
 
   case "5":
-    console.log(`Your option selected is ${table[valueOption]}`);
+    printMessage();
     updateContact(0, "name", "Joana");
     updateContact(1, "telphone", 21727272727);
 
   case "Z":
-    console.log(`Your option selected is ${table[valueOption]}`);
     break;
 
   default:
