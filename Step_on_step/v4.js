@@ -48,12 +48,14 @@ console.log("3. READ ONE");
 console.log("4. DELETE");
 console.log("5. UPDATE");
 
-const printMessage = () => {
-  console.log(`Your option selected is ${inputKeyboard}`);
-};
 const jumpLine = () => {
   console.log("");
 };
+
+const printMessage = () => {
+  console.log(`Your option selected is ${inputKeyboard}`);
+};
+
 let input = require("prompt-sync")();
 
 let inputKeyboard = "";
