@@ -1,13 +1,23 @@
 const scheduler = [
   {
     name: "Lukita",
-    telphone: 21717171717,
+    phone: 21717171717,
     email: "lukitadagalera@piraca.com",
   },
   {
     name: "Varela",
-    telphone: 21717171717,
+    phone: 21717171717,
     email: "Varelitadagalera@piraca.com",
+  },
+  {
+    name: "Melynx",
+    phone: 21717171717,
+    email: "Melynxdagalera@piraca.com",
+  },
+  {
+    name: "BobAP",
+    phone: 21717171717,
+    email: "BobAPdagalera@piraca.com",
   },
 ];
 
@@ -20,24 +30,27 @@ const table = [
   "5. Update",
   "Z. Finish",
 ];
-console.log("///////////////////////////////");
-console.log("///////////MENU///////////////");
-console.log("///////////////////////////////");
-console.log("1. CREATE");
-console.log("2. READ ALL");
-console.log("3. READ ONE");
-console.log("4. DELETE");
-console.log("5. UPDATE");
+const menu = () => {
+  console.log("///////////////////////////////");
+  console.log("///////////MENU///////////////");
+  console.log("///////////////////////////////");
+  console.log("1. CREATE");
+  console.log("2. READ ALL");
+  console.log("3. READ ONE");
+  console.log("4. DELETE");
+  console.log("5. UPDATE");
+  console.log("");
+};
 
 const printMessage = () => {
   console.log(`Your option selected is ${valueOption}`);
 };
 
 //Create Contact
-const registration_scheduler = (name, telphone, email) => {
+const registration_scheduler = (name, phone, email) => {
   const newUser = {
     name,
-    telphone,
+    phone,
     email,
   };
   scheduler.push(newUser);
@@ -48,13 +61,13 @@ const display_contacts = () => {
 };
 //Read One
 const printContact = (index) => {
-  console.log("**------ Contato Impresso ------***");
-  console.table(scheduler[index]);
+  console.log("**------ Contact Print ------***");
+  console.log(scheduler[index]);
 };
 //Delete
 const deleteContact = (index) => {
   scheduler.splice(index, 1);
-  console.log("**---- Contato removido ----**");
+  console.log("**---- Contact deleted ----**");
   console.table(scheduler);
 };
 //Update
@@ -71,13 +84,11 @@ while (valueOption !== "z") {
   switch (valueOption) {
     case "1":
       printMessage();
-      registration_scheduler("Bob", "21717171717", "bobdagalera@piraca.com");
-
-      registration_scheduler(
-        "Melynx",
-        "21717171717",
-        "memedagalera@piraca.com"
-      );
+      const name = input("name : ");
+      const phone = input("phone : ");
+      const email = input("email : ");
+      console.log(name);
+      registration_scheduler(name, phone, email);
       console.table(scheduler);
       break;
 
@@ -88,18 +99,28 @@ while (valueOption !== "z") {
 
     case "3":
       printMessage();
-      printContact(1);
+      const contact = input("Which contact do you want to see by index ? : ");
+      printContact(contact);
       break;
 
     case "4":
       printMessage();
-      deleteContact(1);
+      const contactDeleted = input(
+        "Which contact do you want to delete by index ? : "
+      );
+      deleteContact(contactDeleted);
       break;
 
     case "5":
       printMessage();
-      updateContact(0, "name", "Joana");
-      updateContact(1, "telphone", 21727272727);
+      const indexUpdate = input(
+        "Which contact do you want to update by index ? : "
+      );
+      const keyUpdate = input(
+        "Which key do you want to change (name, phone or email) ? : "
+      );
+      const valueUpdate = input("Enter the value you want to update : ");
+      updateContact(indexUpdate, keyUpdate, valueUpdate);
       break;
     default:
       if (valueOption !== "") {
@@ -108,5 +129,6 @@ while (valueOption !== "z") {
 
       break;
   }
+  menu();
   valueOption = input("Select Your Option : ").toLowerCase();
 }
