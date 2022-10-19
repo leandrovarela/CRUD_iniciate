@@ -1,35 +1,26 @@
 const scheduler = [
   {
     name: "Lukita",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "lukitadagalera@piraca.com",
   },
   {
     name: "Varela",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "Varelitadagalera@piraca.com",
   },
   {
     name: "Melynx",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "Melynxdagalera@piraca.com",
   },
   {
     name: "BobAP",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "BobAPdagalera@piraca.com",
   },
 ];
 
-const table = [
-  "Menu",
-  "1. Create",
-  "2. Read:All",
-  "3. Read:One",
-  "4. Delete",
-  "5. Update",
-  "Z. Finish",
-];
 const menu = () => {
   console.log("///////////////////////////////");
   console.log("///////////MENU///////////////");
