@@ -1,35 +1,26 @@
 const scheduler = [
   {
     name: "Lukita",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "lukitadagalera@piraca.com",
   },
   {
     name: "Varela",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "Varelitadagalera@piraca.com",
   },
   {
     name: "Melynx",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "Melynxdagalera@piraca.com",
   },
   {
     name: "BobAP",
-    phone: 21717171717,
+    phone: "21717171717",
     email: "BobAPdagalera@piraca.com",
   },
 ];
 
-const table = [
-  "Menu",
-  "1. Create",
-  "2. Read:All",
-  "3. Read:One",
-  "4. Delete",
-  "5. Update",
-  "Z. Finish",
-];
 const menu = () => {
   console.log("///////////////////////////////");
   console.log("///////////MENU///////////////");
@@ -61,8 +52,11 @@ const display_contacts = () => {
 };
 //Read One
 const printContact = (index) => {
+  const userSelected = scheduler[index];
   console.log("**------ Contact Print ------***");
-  console.log(scheduler[index]);
+  console.log(`Name:${userSelected.name}`);
+  console.log(`Phone: ${userSelected.phone}`);
+  console.log(`Email: ${userSelected.email}`);
 };
 //Delete
 const deleteContact = (index) => {
@@ -87,7 +81,6 @@ while (valueOption !== "z") {
       const name = input("name : ");
       const phone = input("phone : ");
       const email = input("email : ");
-      console.log(name);
       registration_scheduler(name, phone, email);
       console.table(scheduler);
       break;
@@ -131,4 +124,5 @@ while (valueOption !== "z") {
   }
   menu();
   valueOption = input("Select Your Option : ").toLowerCase();
+  console.clear();
 }
