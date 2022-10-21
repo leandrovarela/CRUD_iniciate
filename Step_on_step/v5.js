@@ -54,14 +54,14 @@ const display_contacts = () => {
 const printContact = (index) => {
   const userSelected = scheduler[index];
   console.log("**------ Contact Print ------***");
-  console.log(`Name:${userSelected.name}`);
+  console.log(`Name:  ${userSelected.name}`);
   console.log(`Phone: ${userSelected.phone}`);
   console.log(`Email: ${userSelected.email}`);
 };
 //Delete
 const deleteContact = (index) => {
   scheduler.splice(index, 1);
-  console.log("**---- Contact deleted ----**");
+  console.log("**---- Contact Deleted ----**");
   console.table(scheduler);
 };
 //Update
@@ -78,9 +78,9 @@ while (valueOption !== "z") {
   switch (valueOption) {
     case "1":
       printMessage();
-      const name = input("name : ");
-      const phone = input("phone : ");
-      const email = input("email : ");
+      const name = input("Name : ");
+      const phone = input("Phone : ");
+      const email = input("Email : ");
       registration_scheduler(name, phone, email);
       console.table(scheduler);
       break;
