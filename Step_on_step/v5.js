@@ -124,5 +124,4 @@ while (valueOption !== "z") {
   }
   menu();
   valueOption = input("Select Your Option : ").toLowerCase();
-  console.clear();
 }
