@@ -72,7 +72,7 @@ const searchbyName = (names) => {
   const searchResult = scheduler.filter(
     (word) => word.name.toLocaleLowerCase().indexOf(names.toLowerCase()) !== -1
   );
-  console.table(searchResult);
+  return searchResult;
 };
 
 //Delete
@@ -110,7 +110,15 @@ while (valueOption !== "z") {
     case "3":
       printMessage();
       const contact = input("Which contact do you want to see by name ? : ");
-      searchbyName(contact);
+      const result = searchbyName(contact);
+      if (result.length > 0) {
+        console.table(result);
+      } else {
+        jumpLine();
+        console.log("DEU MERDA CAPITAO");
+        jumpLine();
+      }
+
       break;
 
     case "4":
