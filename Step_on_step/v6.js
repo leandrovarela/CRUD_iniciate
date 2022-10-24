@@ -75,14 +75,6 @@ const searchbyName = (names) => {
   console.table(searchResult);
 };
 
-// const printContact = (index) => {
-//   const userSelected = scheduler[index];
-//   console.log("**------ Contact Print ------***");
-//   console.log(`Name:  ${userSelected.name}`);
-//   console.log(`Phone: ${userSelected.phone}`);
-//   console.log(`Email: ${userSelected.email}`);
-// };
-
 //Delete
 const deleteContact = (index) => {
   scheduler.splice(index, 1);
@@ -117,7 +109,7 @@ while (valueOption !== "z") {
 
     case "3":
       printMessage();
-      const contact = input("Which contact do you want to see by index ? : ");
+      const contact = input("Which contact do you want to see by name ? : ");
       searchbyName(contact);
       break;
 
