@@ -70,7 +70,7 @@ export default function Submit() {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h2">
+          <Typography component="h1" variant="h3">
             Varela's schedule
           </Typography>
           <Box
