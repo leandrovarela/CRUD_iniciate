@@ -7,6 +7,6 @@ background-color: antiquewhite}
 
 @font-face {font-family: "Ninja Naruto"; src: url("//db.onlinewebfonts.com/t/73fedd912ba11f583a359ce4c2e742ed.eot"); src: url("//db.onlinewebfonts.com/t/73fedd912ba11f583a359ce4c2e742ed.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/73fedd912ba11f583a359ce4c2e742ed.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/73fedd912ba11f583a359ce4c2e742ed.woff") format("woff"), url("//db.onlinewebfonts.com/t/73fedd912ba11f583a359ce4c2e742ed.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/73fedd912ba11f583a359ce4c2e742ed.svg#Ninja Naruto") format("svg"); }
 
-h1.MuiTypography-root.MuiTypography-h3.css-gepadz-MuiTypography-root{
-  font-family: "Ninja Naruto"
+.MuiTypography-root {
+  font-family: "Ninja Naruto" !important
 }

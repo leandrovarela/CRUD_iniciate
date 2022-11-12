@@ -1,20 +1,15 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import Box from "@mui/material/Box";
+import { Box, Link } from "@mui/material";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import "./App.css";
-
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import TableSmart from "./components/tableSmart";
+import "./styles/App.css";
+import contacts from "./components/sql/database";
+//  createContact from "./components/createContact";
 
 function Copyright(props) {
   return (
@@ -36,25 +31,17 @@ function Copyright(props) {
     </Typography>
   );
 }
-
 const theme = createTheme();
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
-export default function Submit() {
+export default function onSubmit() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      id: contacts.leghth + 1,
       name: data.get("name"),
-      email: data.get("email"),
       phone: data.get("phone"),
+      email: data.get("email"),
     });
   };
 
@@ -71,7 +58,7 @@ export default function Submit() {
           }}
         >
           <Typography component="h1" variant="h3">
-            Varela's schedule
+            Varela's Contacts
           </Typography>
           <Box
             component="form"
@@ -118,56 +105,15 @@ export default function Submit() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Subimit
+              Submit
             </Button>
           </Box>
         </Box>
         <Box>
-          <Stack
-            direction="column"
-            divider={<Divider orientation="horizontal" flexItem />}
-            spacing={2}
-          >
-            <Grid id="resgistredContact" item xs={8}>
-              <Item style={{ alignItems: "flex-start" }}>
-                Name: Jacare Boladao Phone: 21 98064654564 Email:
-                Jacare@lacoste.com
-                <Button>
-                  <DeleteIcon />
-                </Button>
-                <Button>
-                  <EditIcon />
-                </Button>
-              </Item>
-            </Grid>
-            <Grid id="resgistredContact" item xs={8}>
-              <Item>
-                Name: Jacatatu Boladao Phone: 21 975555564 Email:
-                Jacatatu@lacoste.com
-                <Button>
-                  <DeleteIcon />
-                </Button>
-                <Button>
-                  <EditIcon />
-                </Button>
-              </Item>
-            </Grid>
-            <Grid id="resgistredContact" item xs={8}>
-              <Item>
-                Name: Jacaroa Boladona Phone: 21 94654564 Email:
-                Jacaroa@lacoste.com
-                <Button>
-                  <DeleteIcon />
-                </Button>
-                <Button>
-                  <EditIcon />
-                </Button>
-              </Item>
-            </Grid>
-          </Stack>
+          <TableSmart />
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+      <Copyright sx={{ mt: 8, mb: 4 }} />
     </ThemeProvider>
   );
 }
