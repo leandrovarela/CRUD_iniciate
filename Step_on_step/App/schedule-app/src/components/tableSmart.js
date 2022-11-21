@@ -2,8 +2,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import * as React from "react";
-import contacts from "./sql/database";
-
 export default function DataTable() {
   return (
     <div style={{ height: 400, width: "100%" }}>
@@ -27,15 +25,25 @@ const columns = [
     type: "String",
     editable: true,
   },
+
   {
-    field: "actions",
+    field: "edit",
+    headerName: "Edit",
     type: "actions",
     width: 100,
     getActions: () => [
       <GridActionsCellItem icon={<EditIcon />} label="Edit" />,
+    ],
+  },
+  {
+    field: "delete",
+    headerName: "Delete",
+    type: "actions",
+    width: 100,
+
+    getActions: () => [
       <GridActionsCellItem icon={<DeleteIcon />} label="Delete" />,
     ],
   },
 ];
-
-const rows = contacts;
+const rows = [];

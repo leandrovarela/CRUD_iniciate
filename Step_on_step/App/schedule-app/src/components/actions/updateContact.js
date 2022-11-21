@@ -1,7 +1,7 @@
-import contacts from "./sql/database";
+import Contacts from "../../sql/database";
 
 const updateContact = (id, attribute, value) => {
-  contacts[id][attribute] = value;
+  Contacts[id][attribute] = value;
 };
 
 export default updateContact;

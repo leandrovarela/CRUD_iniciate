@@ -1,7 +1,7 @@
-import contacts from "./sql/database";
+import Contacts from "../../sql/database";
 
 const readOneContact = (names) => {
-  const searchResult = contacts.filter(
+  const searchResult = Contacts.filter(
     (word) => word.name.toLocaleLowerCase().indexOf(names.toLowerCase()) !== -1
   );
   return searchResult;
