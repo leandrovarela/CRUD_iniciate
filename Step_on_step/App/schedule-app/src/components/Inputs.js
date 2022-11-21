@@ -6,25 +6,23 @@ const InputRender = (e) => {
   const [phone, setPhone] = React.useState("");
   const [email, setEmail] = React.useState("");
 
-  fetch(`http://localhost:5000/contacts/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(e),
-  })
-    .then((resp) => resp.json())
-    .then((data) => {
-      {
-        id, setName(data), setPhone(data), setEmail(data);
-      }
-    })
-    .catch((err) => console.log(err));
+  // fetch("http://localhost:5000/contacts/", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // })
+  //   .then((resp) => resp.json())
+  //   .then((data) => {
+  //     id, name(data), phone(data), email(data);
+  //   })
+  //   .catch((err) => console.log(err));
 
   return (
     <>
       <label>Name </label>
       <TextField
+        value={name}
         onChange={(e) => setName(e.target.value)}
         margin="normal"
         required
@@ -37,7 +35,8 @@ const InputRender = (e) => {
       />
       <label>Phone </label>
       <TextField
-        onChange={(e) => setName(e.target.value)}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
         margin="normal"
         required
         fullWidth
@@ -49,7 +48,8 @@ const InputRender = (e) => {
       />
       <label>Email </label>
       <TextField
-        onChange={(e) => setName(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         margin="normal"
         required
         fullWidth
