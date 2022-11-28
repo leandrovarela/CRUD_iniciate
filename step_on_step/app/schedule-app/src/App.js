@@ -1,12 +1,12 @@
 import * as React from "react";
-import ThemeFull from "./components/Form";
+import Form from "./components/form";
 import "./styles/App.css";
 
 function App() {
   console.log("ok, Complete");
   return (
     <div>
-      <ThemeFull />
+      <Form />
     </div>
   );
 }

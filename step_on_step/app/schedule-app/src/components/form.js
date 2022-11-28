@@ -5,11 +5,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import Copyright from "./copyright";
-import InputRender from "./Inputs";
-import DataTable from "./tableSmart";
+import ContactRenders from "./inputs";
+
 const theme = createTheme();
 
-export default function ThemeFull() {
+export default function Form() {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="ls">
@@ -26,9 +26,8 @@ export default function ThemeFull() {
             Varela's Contacts
           </Typography>
         </Box>
-        <InputRender />
-        <Box>
-          <DataTable />
+        <Box className="contacts-inputs-form">
+          <ContactRenders />
         </Box>
       </Container>
       <Copyright />
