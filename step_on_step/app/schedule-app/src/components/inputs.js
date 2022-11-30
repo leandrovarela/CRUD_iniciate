@@ -38,6 +38,16 @@ const ContactRenders = () => {
     });
   };
 
+  const deleteContact = ()=> {
+    fetch(`http://localhost:5000/contacts/${}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      
+    });
+  };
+
   const handleSubmit = () => createContact();
 
   const columns = [
