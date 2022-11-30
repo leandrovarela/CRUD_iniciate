@@ -2,7 +2,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ContactRenders = () => {
   // Hooks for getInputs
@@ -23,6 +23,8 @@ const ContactRenders = () => {
       });
   };
 
+  useEffect(() => getContacts());
+
   const createContact = () => {
     fetch("http://localhost:5000/contacts/", {
       method: "POST",
@@ -39,11 +41,12 @@ const ContactRenders = () => {
   };
 
   const deleteContact = (id) => {
-    id_temp = setContact((prevContact) =>
+    const id_temp = setContact((prevContact) =>
       prevContact.filter((contact) => contact.id !== id)
     );
+    console.log(id_temp);
     fetch(`http://localhost:5000/contacts/${id_temp}`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
@@ -68,7 +71,7 @@ const ContactRenders = () => {
       headerName: "Edit",
       type: "actions",
       width: 100,
-      getActions: (row) => [
+      getActions: () => [
         <GridActionsCellItem
           //onClick={updateContact(row.id)}
           icon={<EditIcon />}
@@ -84,7 +87,7 @@ const ContactRenders = () => {
 
       getActions: (contact) => [
         <GridActionsCellItem
-          //onClick={() => deleteContact(contact.id)}
+          onClick={() => deleteContact(contact.id)}
           icon={<DeleteIcon />}
           label="Delete"
         />,
@@ -146,10 +149,9 @@ const ContactRenders = () => {
         <DataGrid
           rows={contact}
           columns={columns}
-          pageSize={5}
+          pageSize={30}
           rowsPerPageOptions={[1]}
         />
-        <Button onClick={() => getContacts()}>pega tudo</Button>
       </div>
     </>
   );
