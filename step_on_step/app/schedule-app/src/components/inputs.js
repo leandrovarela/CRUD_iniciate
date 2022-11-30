@@ -38,13 +38,15 @@ const ContactRenders = () => {
     });
   };
 
-  const deleteContact = ()=> {
-    fetch(`http://localhost:5000/contacts/${}`, {
+  const deleteContact = (id) => {
+    id_temp = setContact((prevContact) =>
+      prevContact.filter((contact) => contact.id !== id)
+    );
+    fetch(`http://localhost:5000/contacts/${id_temp}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      
     });
   };
 
