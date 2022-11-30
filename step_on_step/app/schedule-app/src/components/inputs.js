@@ -2,7 +2,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ContactRenders = () => {
   // Hooks for getInputs
@@ -23,9 +23,7 @@ const ContactRenders = () => {
       });
   };
 
-  // useEffect(() => {
-  //   getContacts();
-  // });
+  useEffect(() => getContacts(), [contact]);
 
   const createContact = () => {
     fetch("http://localhost:5000/contacts/", {
