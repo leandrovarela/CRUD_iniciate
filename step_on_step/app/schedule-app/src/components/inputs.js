@@ -10,7 +10,7 @@ const ContactRenders = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState([]);
-
+  const [id, setId] = useState("");
   const getContacts = () => {
     fetch("http://localhost:5000/contacts/", {
       method: "GET",
