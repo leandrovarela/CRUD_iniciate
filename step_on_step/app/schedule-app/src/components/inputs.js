@@ -23,7 +23,9 @@ const ContactRenders = () => {
       });
   };
 
-  useEffect(() => getContacts(), [contact]);
+  useEffect(() => {
+    getContacts();
+  }, []);
 
   const createContact = () => {
     fetch("http://localhost:5000/contacts/", {
@@ -41,16 +43,20 @@ const ContactRenders = () => {
   };
 
   const deleteContact = (id) => {
-    const id_temp = setContact((prevContact) =>
+    setContact((prevContact) =>
       prevContact.filter((contact) => contact.id !== id)
     );
-    console.log(id_temp);
-    fetch(`http://localhost:5000/contacts/${id_temp}`, {
+
+    fetch(`http://localhost:5000/contacts/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
     });
+  };
+
+  const updateContactContact = (id) => {
+    setContact(prevContact);
   };
 
   const handleSubmit = () => createContact();
@@ -85,9 +91,9 @@ const ContactRenders = () => {
       type: "actions",
       width: 100,
 
-      getActions: (contact) => [
+      getActions: (e) => [
         <GridActionsCellItem
-          onClick={() => deleteContact(contact.id)}
+          onClick={() => deleteContact(e.id)}
           icon={<DeleteIcon />}
           label="Delete"
         />,
