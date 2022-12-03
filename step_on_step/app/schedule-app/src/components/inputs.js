@@ -10,16 +10,15 @@ const ContactRenders = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState([]);
-  const [id, setId] = useState("");
 
+  //GetAllContacts
   const getContacts = () => {
-    fetch("http://localhost:5000/contacts/", {
+    fetch("http://localhost:5002/contacts/", {
       method: "GET",
     })
       .then((resp) => resp.json())
       .then((data) => {
         setContact(data);
-        console.log(data);
       });
   };
 
@@ -27,8 +26,9 @@ const ContactRenders = () => {
     getContacts();
   }, []);
 
-  const createContact = () => {
-    fetch("http://localhost:5000/contacts/", {
+  //Create
+  const createContact = (name, phone, email) => {
+    fetch("http://localhost:5002/contacts/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,14 +40,21 @@ const ContactRenders = () => {
         email: email,
       }),
     });
+    getContacts();
   };
 
+  //HandleSubmit
+  const handleSubmit = () => {
+    createContact(name, phone, email);
+  };
+
+  //Delete
   const deleteContact = (id) => {
     setContact((prevContact) =>
       prevContact.filter((contact) => contact.id !== id)
     );
 
-    fetch(`http://localhost:5000/contacts/${id}`, {
+    fetch(`http://localhost:5002/contacts/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -55,15 +62,26 @@ const ContactRenders = () => {
     });
   };
 
-  // const updateContactContact = (id) => {
-  //   setContact(prevContact);
-  // };
-
-  const handleSubmit = () => createContact();
-
+  //Update
+  const updateContact = (id, name, phone, email) => {
+    setContact(id);
+    fetch(`http://localhost:5002/contacts/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+        name: name,
+        phone: phone,
+        email: email,
+      }),
+    });
+    getContacts();
+  };
+  //BaseTable
   const columns = [
     { field: "name", headerName: "Name", width: 400, editable: true },
-    { field: "email", headerName: "Email", width: 300, editable: true },
     {
       field: "phone",
       headerName: "Phone",
@@ -71,15 +89,16 @@ const ContactRenders = () => {
       type: "String",
       editable: true,
     },
+    { field: "email", headerName: "Email", width: 300, editable: true },
 
     {
       field: "edit",
       headerName: "Edit",
       type: "actions",
       width: 100,
-      getActions: () => [
+      getActions: (e) => [
         <GridActionsCellItem
-          //onClick={updateContact(row.id)}
+          onClick={() => updateContact(e.id, e.name, e.phone, e.email)}
           icon={<EditIcon />}
           label="Edit"
         />,
@@ -104,7 +123,7 @@ const ContactRenders = () => {
   return (
     <>
       <div className="form-input">
-        <label>Name </label>
+        <label> Name </label>
         <TextField
           onChange={(e) => setName(e.target.value)}
           margin="normal"
@@ -143,7 +162,7 @@ const ContactRenders = () => {
         <Button
           type="submit"
           id="button"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit()}
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
