@@ -17,6 +17,7 @@ const ContactRenders = () => {
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [newEmail, setNewEmail] = useState("");
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -63,16 +64,13 @@ const ContactRenders = () => {
 
   //Delete
   const deleteContact = (id) => {
-    setContact((prevContact) =>
-      prevContact.filter((contact) => contact.id !== id)
-    );
-
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
     });
+    getContacts();
   };
   //Update
   const updateContact = (id, name, phone, email) => {
@@ -103,6 +101,7 @@ const ContactRenders = () => {
     handleClose();
     getContacts();
   };
+
   //BaseTable
   const columns = [
     { field: "name", headerName: "Name", width: 400, editable: true },
