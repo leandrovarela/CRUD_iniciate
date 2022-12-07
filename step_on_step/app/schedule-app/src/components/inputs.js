@@ -14,16 +14,14 @@ const ContactRenders = () => {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState([]);
   const [open, setOpen] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [newPhone, setNewPhone] = useState("");
-  const [newEmail, setNewEmail] = useState("");
+  const [update, setUpdate] = useState(contact);
 
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 450,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 30,
@@ -59,7 +57,6 @@ const ContactRenders = () => {
         email: email,
       }),
     });
-    getContacts();
   };
 
   //Delete
@@ -73,8 +70,8 @@ const ContactRenders = () => {
     getContacts();
   };
   //Update
-  const updateContact = (id, name, phone, email) => {
-    setContact(id);
+  const updateContact = (id, contat) => {
+    setUpdate(id);
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "PUT",
       headers: {
@@ -82,9 +79,9 @@ const ContactRenders = () => {
       },
       body: JSON.stringify({
         id: id,
-        name: name,
-        phone: phone,
-        email: email,
+        name: contat.name,
+        phone: contat.phone,
+        email: contat.email,
       }),
     });
   };
@@ -92,12 +89,25 @@ const ContactRenders = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleClearInputs = () => {
+    Array.from(document.querySelectorAll("input")).forEach(
+      (name) => (name.value = "")
+    );
+    Array.from(document.querySelectorAll("input")).forEach(
+      (phone) => (phone.value = "")
+    );
+    Array.from(document.querySelectorAll("input")).forEach(
+      (email) => (email.value = "")
+    );
+  };
+
   const handleSubmit = () => {
-    createContact(name, phone, email);
     getContacts();
+    createContact(name, phone, email);
+    handleClearInputs();
   };
   const handleUpdate = (id) => {
-    updateContact(id, newName, newPhone, newEmail);
+    updateContact(id, contact);
     handleClose();
     getContacts();
   };
@@ -136,23 +146,25 @@ const ContactRenders = () => {
               Update Contact
             </Typography>
             <TextField
-              m
-              label={e.name}
-              onChange={(e) => setNewName(e.target.value)}
+              onChange={(e) =>
+                setUpdate((arg) => ({ ...arg, name: e.target.value }))
+              }
             ></TextField>
             <TextField
-              label={e.phone}
-              onChange={(e) => setNewPhone(e.target.value)}
+              onChange={(e) =>
+                setUpdate((arg) => ({ ...arg, phone: e.target.value }))
+              }
             ></TextField>
             <TextField
-              label={e.email}
-              onChange={(e) => setNewEmail(e.target.value)}
+              onChange={(e) =>
+                setUpdate((arg) => ({ ...arg, email: e.target.value }))
+              }
             ></TextField>
             <Button
-              onClick={() => handleUpdate(e.id)}
+              onClick={() => handleUpdate(e.id, e.update)}
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 5, mb: 5 }}
             >
               Update
             </Button>
@@ -230,8 +242,8 @@ const ContactRenders = () => {
         <DataGrid
           rows={contact}
           columns={columns}
-          pageSize={30}
-          rowsPerPageOptions={[1]}
+          pageSize={20}
+          rowsPerPageOptions={[6]}
         />
       </div>
     </>
