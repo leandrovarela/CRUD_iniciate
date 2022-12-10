@@ -1,50 +1,23 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, TextField } from "@mui/material";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 
+const clearContact = {
+  id: "",
+  name: "",
+  phone: "",
+  email: "",
+};
+
 const ContactRenders = () => {
-  // Hooks for getInputs
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [update, setUpdate] = useState(contact);
+  const [contacts, setContacts] = useState([]);
+  const [currentContact, setCurrentContact] = useState(clearContact);
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 450,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 30,
-    p: 5,
-  };
+  const createContact = () => {
+    const { name, phone, email } = currentContact;
 
-  //GetAllContacts
-  const getContacts = () => {
-    fetch("http://localhost:5200/contacts/", {
-      method: "GET",
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setContact(data);
-      });
-  };
-
-  useEffect(() => {
-    getContacts();
-  }, []);
-
-  //Create
-  const createContact = (name, phone, email) => {
     fetch("http://localhost:5200/contacts/", {
       method: "POST",
       headers: {
@@ -56,63 +29,72 @@ const ContactRenders = () => {
         phone: phone,
         email: email,
       }),
+    }).then(() => {
+      getContacts();
     });
   };
 
-  //Delete
+  const getContacts = () => {
+    fetch("http://localhost:5200/contacts/", {
+      method: "GET",
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setContacts(data);
+      });
+  };
+
   const deleteContact = (id) => {
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
+    }).then(() => {
+      getContacts();
     });
-    getContacts();
   };
-  //Update
-  const updateContact = (id, contat) => {
-    setUpdate(id);
+
+  const updateContact = () => {
+    const { id, name, phone, email } = currentContact;
+
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: id,
-        name: contat.name,
-        phone: contat.phone,
-        email: contat.email,
+        id,
+        name,
+        phone,
+        email,
       }),
+    }).then(() => {
+      getContacts();
     });
   };
-  //Handles
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const handleClearInputs = () => {
-    Array.from(document.querySelectorAll("input")).forEach(
-      (name) => (name.value = "")
-    );
-    Array.from(document.querySelectorAll("input")).forEach(
-      (phone) => (phone.value = "")
-    );
-    Array.from(document.querySelectorAll("input")).forEach(
-      (email) => (email.value = "")
-    );
+    setCurrentContact(clearContact);
   };
 
   const handleSubmit = () => {
-    getContacts();
-    createContact(name, phone, email);
     handleClearInputs();
-  };
-  const handleUpdate = (id) => {
-    updateContact(id, contact);
-    handleClose();
-    getContacts();
+
+    if (currentContact.id) {
+      updateContact();
+    } else {
+      createContact(currentContact);
+    }
   };
 
-  //BaseTable
+  const handleUpdate = (id) => {
+    const index = contacts.findIndex((contact) => contact.id === id);
+    const contact = contacts[index];
+
+    setCurrentContact(contact);
+  };
+
   const columns = [
     { field: "name", headerName: "Name", width: 400, editable: true },
     {
@@ -131,45 +113,10 @@ const ContactRenders = () => {
       width: 100,
       getActions: (e) => [
         <GridActionsCellItem
-          onClick={() => handleOpen()}
+          onClick={() => handleUpdate(e.id)}
           icon={<EditIcon />}
           label="Edit"
         />,
-        <Modal
-          open={open}
-          onClose={() => handleClose()}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Update Contact
-            </Typography>
-            <TextField
-              onChange={(e) =>
-                setUpdate((arg) => ({ ...arg, name: e.target.value }))
-              }
-            ></TextField>
-            <TextField
-              onChange={(e) =>
-                setUpdate((arg) => ({ ...arg, phone: e.target.value }))
-              }
-            ></TextField>
-            <TextField
-              onChange={(e) =>
-                setUpdate((arg) => ({ ...arg, email: e.target.value }))
-              }
-            ></TextField>
-            <Button
-              onClick={() => handleUpdate(e.id, e.update)}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 5, mb: 5 }}
-            >
-              Update
-            </Button>
-          </Box>
-        </Modal>,
       ],
     },
     {
@@ -188,12 +135,18 @@ const ContactRenders = () => {
     },
   ];
 
+  useEffect(() => {
+    getContacts();
+  }, []);
+
   return (
     <>
       <div className="form-input">
-        <label> Name </label>
         <TextField
-          onChange={(e) => setName(e.target.value)}
+          value={currentContact.name}
+          onChange={(e) =>
+            setCurrentContact((prev) => ({ ...prev, name: e.target.value }))
+          }
           margin="normal"
           required
           fullWidth
@@ -205,7 +158,10 @@ const ContactRenders = () => {
         />
         <label>Phone </label>
         <TextField
-          onChange={(e) => setPhone(e.target.value)}
+          value={currentContact.phone}
+          onChange={(e) =>
+            setCurrentContact((prev) => ({ ...prev, phone: e.target.value }))
+          }
           margin="normal"
           required
           fullWidth
@@ -217,7 +173,10 @@ const ContactRenders = () => {
         />
         <label>Email </label>
         <TextField
-          onChange={(e) => setEmail(e.target.value)}
+          value={currentContact.email}
+          onChange={(e) =>
+            setCurrentContact((prev) => ({ ...prev, email: e.target.value }))
+          }
           margin="normal"
           required
           fullWidth
@@ -240,7 +199,7 @@ const ContactRenders = () => {
       </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={contact}
+          rows={contacts}
           columns={columns}
           pageSize={20}
           rowsPerPageOptions={[6]}
