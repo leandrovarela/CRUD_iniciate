@@ -24,7 +24,7 @@ const ContactRenders = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: Date.now() * Math.random(),
+        id: Date.now().toFixed(0),
         name: name,
         phone: phone,
         email: email,
@@ -96,21 +96,21 @@ const ContactRenders = () => {
   };
 
   const columns = [
-    { field: "name", headerName: "Name", width: 400, editable: true },
+    { field: "name", headerName: "Name", width: 300, editable: true },
     {
       field: "phone",
       headerName: "Phone",
-      width: 200,
+      width: 170,
       type: "String",
       editable: true,
     },
-    { field: "email", headerName: "Email", width: 300, editable: true },
+    { field: "email", headerName: "Email", width: 230, editable: true },
 
     {
       field: "edit",
       headerName: "Edit",
       type: "actions",
-      width: 100,
+      width: 50,
       getActions: (e) => [
         <GridActionsCellItem
           onClick={() => handleUpdate(e.id)}
@@ -123,7 +123,7 @@ const ContactRenders = () => {
       field: "delete",
       headerName: "Delete",
       type: "actions",
-      width: 100,
+      width: 70,
 
       getActions: (e) => [
         <GridActionsCellItem
@@ -136,7 +136,9 @@ const ContactRenders = () => {
   ];
 
   useEffect(() => {
-    getContacts();
+    setTimeout(() => {
+      getContacts();
+    }, 50);
   }, []);
 
   return (
