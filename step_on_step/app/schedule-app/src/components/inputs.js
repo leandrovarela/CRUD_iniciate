@@ -57,7 +57,7 @@ const ContactRenders = () => {
   };
 
   const deleteContact = (id) => {
-    setTimeout(setLoad(true), 5000);
+    setLoad(true);
 
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "DELETE",
@@ -75,7 +75,7 @@ const ContactRenders = () => {
 
   const updateContact = () => {
     const { id, name, phone, email } = currentContact;
-    setTimeout(setLoad(true), 5000);
+    setLoad(true);
 
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "PUT",
