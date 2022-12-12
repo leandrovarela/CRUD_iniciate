@@ -3,6 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Button, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
+import Load from "./load";
 
 const clearContact = {
   id: "",
@@ -14,9 +15,13 @@ const clearContact = {
 const ContactRenders = () => {
   const [contacts, setContacts] = useState([]);
   const [currentContact, setCurrentContact] = useState(clearContact);
+  const [refresh, setRefresh] = useState(false);
+  const [load, setLoad] = useState(true);
 
   const createContact = () => {
     const { name, phone, email } = currentContact;
+
+    setLoad(true);
 
     fetch("http://localhost:5200/contacts/", {
       method: "POST",
@@ -29,9 +34,13 @@ const ContactRenders = () => {
         phone: phone,
         email: email,
       }),
-    }).then(() => {
-      getContacts();
-    });
+    })
+      .then(() => {
+        setRefresh((prev) => !prev);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
   };
 
   const getContacts = () => {
@@ -41,22 +50,32 @@ const ContactRenders = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setContacts(data);
+      })
+      .finally(() => {
+        setLoad(false);
       });
   };
 
   const deleteContact = (id) => {
+    setTimeout(setLoad(true), 5000);
+
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(() => {
-      getContacts();
-    });
+    })
+      .then(() => {
+        setRefresh((prev) => !prev);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
   };
 
   const updateContact = () => {
     const { id, name, phone, email } = currentContact;
+    setTimeout(setLoad(true), 5000);
 
     fetch(`http://localhost:5200/contacts/${id}`, {
       method: "PUT",
@@ -69,9 +88,13 @@ const ContactRenders = () => {
         phone,
         email,
       }),
-    }).then(() => {
-      getContacts();
-    });
+    })
+      .then(() => {
+        setRefresh((prev) => !prev);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
   };
 
   const handleClearInputs = () => {
@@ -136,14 +159,12 @@ const ContactRenders = () => {
   ];
 
   useEffect(() => {
-    setTimeout(() => {
-      getContacts();
-    }, 50);
-  }, []);
+    getContacts();
+  }, [refresh]);
 
   return (
     <>
-      <div className="form-input">
+      <div className="form-input" display="flex">
         <TextField
           value={currentContact.name}
           onChange={(e) =>
@@ -200,12 +221,16 @@ const ContactRenders = () => {
         </Button>
       </div>
       <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={contacts}
-          columns={columns}
-          pageSize={20}
-          rowsPerPageOptions={[6]}
-        />
+        {load && <Load size={300} />}
+        {!load && (
+          <DataGrid
+            display="flex"
+            rows={contacts}
+            columns={columns}
+            pageSize={20}
+            rowsPerPageOptions={[6]}
+          />
+        )}
       </div>
     </>
   );
