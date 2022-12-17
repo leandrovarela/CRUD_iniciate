@@ -4,7 +4,7 @@ const server = express();
 
 server.use(express.json());
 
-const contacts = ["varela", "Robert", "Lukita"];
+const contacts = ["Varela", "Robert", "Lukita"];
 
 server.get("/contacts", (req, res) => {
   const { index } = req.params;
