@@ -25,11 +25,13 @@ server.post("/contacts", (req, res) => {
 server.put("/contacts", (req, res) => {
   const { index } = req.body;
 
-  return res.json(contacts.splice(index, 1));
+  return res.json(contacts.(index, 1));
 });
 
 server.delete(`/contacts/${id}`, (req, res) => {
-  const { name } = req.body;
+  const { index } = req.body;
+
+  return res.json(contacts.splice(index, 1));
 });
 
 server.listen(5000);
