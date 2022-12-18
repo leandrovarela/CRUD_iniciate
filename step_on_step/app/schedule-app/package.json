@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "backend": "json-server --watch db.json --port 5200",
-    "express": "node-express .src/services/express.js 5000",
+    "express": "nodemon ./src/services/server.js localhost 5000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -46,5 +46,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandrovarela94/CRUD_iniciate.git"
+  },
+  "author": "Leandro Varela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leandrovarela94/CRUD_iniciate/issues"
+  },
+  "homepage": "https://github.com/leandrovarela94/CRUD_iniciate#readme"
 }
