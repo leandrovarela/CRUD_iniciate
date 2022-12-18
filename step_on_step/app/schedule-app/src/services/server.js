@@ -1,35 +1,12 @@
 const express = require("express");
 
+const dbJson = require("./db.json");
+
 const server = express();
 
 server.use(express.json());
 
-const contacts = [
-  {
-    id: 1,
-    name: "LEANDRO VARELA PEREIRA",
-    phone: "+55(21) 97477 - 0964",
-    email: "varela@gmail.com",
-  },
-  {
-    id: 2,
-    name: "LUCAS VARELA PEREIRA",
-    phone: "+55(21) 97477 - 0964",
-    email: "lucas@gmail.com",
-  },
-  {
-    id: 3,
-    name: "ROBERT VARELA PEREIRA",
-    phone: "+55(21) 97477 - 0964",
-    email: "robert@gmail.com",
-  },
-  {
-    id: 4,
-    name: "JUNIOR VARELA PEREIRA",
-    phone: "+55(21) 97477 - 0964",
-    email: "melynx@gmail.com",
-  },
-];
+const contacts = dbJson;
 
 server.get("/contacts", (req, res) => {
   return res.json(contacts);
@@ -63,8 +40,16 @@ server.put("/contacts/:id", (req, res) => {
 
   const { name, phone, email } = req.body;
 
-  const contactIndex = contacts.findIndex((contact) => contact.id === id);
-  contacts[contactIndex] = { ...contacts[contactIndex], name, phone, email };
+  const contactIndex = contacts.findIndex(
+    (contact) => contact.id.toString() === id
+  );
+
+  contacts[contactIndex] = {
+    ...contacts[contactIndex],
+    name: name,
+    phone: phone,
+    email: email,
+  };
 
   return res.json({ message: "Contact updated" });
 });
@@ -72,14 +57,13 @@ server.put("/contacts/:id", (req, res) => {
 server.delete("/contacts/:id", (req, res) => {
   const { id } = req.params;
 
-  const response = contacts.findIndex((contact) => contact.id === id);
+  const response = contacts.findIndex(
+    (contact) => contact.id.toString() === id
+  );
 
   contacts.splice(response, 1);
 
-  return res.json(
-    // { message: "Contact Deleted " }
-    response
-  );
+  return res.json({ message: "Contact Deleted " });
 });
 
 server.listen(5000);
