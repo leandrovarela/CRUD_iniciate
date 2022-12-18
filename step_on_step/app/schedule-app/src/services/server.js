@@ -1,3 +1,4 @@
+const { response } = require("express");
 const express = require("express");
 
 const server = express();
@@ -10,6 +11,24 @@ const contacts = [
     name: "LEANDRO VARELA PEREIRA",
     phone: "+55(21) 97477 - 0964",
     email: "varela@gmail.com",
+  },
+  {
+    id: 2,
+    name: "LUCAS VARELA PEREIRA",
+    phone: "+55(21) 97477 - 0964",
+    email: "lucas@gmail.com",
+  },
+  {
+    id: 3,
+    name: "ROBERT VARELA PEREIRA",
+    phone: "+55(21) 97477 - 0964",
+    email: "robert@gmail.com",
+  },
+  {
+    id: 4,
+    name: "JUNIOR VARELA PEREIRA",
+    phone: "+55(21) 97477 - 0964",
+    email: "melynx@gmail.com",
   },
 ];
 
@@ -53,15 +72,19 @@ server.put("/contacts/:id", (req, res) => {
     email,
   };
 
-  return res.json(contacts);
+  return res.json({ message: "Contact updated" });
 });
 
 server.delete("/contacts/:id", (req, res) => {
   const { id } = req.params;
-  const contactIndex = contacts.findIndex((contact) => contact.id === id);
+  const contactIndex = contacts.findIndex(
+    (contact) => contact.id === id,
+    console.log(contact.id)
+  );
+
   contacts.splice(contactIndex, 1);
 
-  return res.json("O contato foi deletado", contacts);
+  return res.json(id);
 });
 
 server.listen(5000);
