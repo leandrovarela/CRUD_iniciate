@@ -23,7 +23,7 @@ const ContactRenders = () => {
 
     setLoad(true);
 
-    fetch("http://localhost:5000/contacts/", {
+    fetch("http://localhost:5000/contacts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
