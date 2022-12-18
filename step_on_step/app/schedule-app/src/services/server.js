@@ -37,15 +37,17 @@ server.get("/contacts", (req, res) => {
 
 server.post("/contacts", (req, res) => {
   const contact = req.body;
-  contacts.push(req.body);
 
-  return res.json(contact);
+  contacts.push(contact);
+
+  return res.json(contacts);
 });
 
 server.put("/contacts", (req, res) => {
-  const { contact } = req.body;
-
-  return res.json(contact);
+  const contact = req.body;
+  if (contacts.indexOf(contact.id)) contacts.push(contact);
+  else console.log("Contact not exist");
+  return res.json(contacts);
 });
 
 server.delete(`/contacts/`, (req, res) => {
