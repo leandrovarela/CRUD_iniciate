@@ -51,11 +51,11 @@ server.put("/contacts", (req, res) => {
 });
 
 server.delete(`/contacts/`, (req, res) => {
-  const { id } = req.body;
+  const { index } = req.body;
 
-  contacts.splice(id, 1);
+  contacts.splice(index, 1);
 
-  return res.json({ message: "O contato foi deletado" });
+  return res.json({ message: "O contato foi deletado" }, contacts);
 });
 
 server.listen(5000);
