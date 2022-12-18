@@ -55,7 +55,7 @@ server.post("/contacts", (req, res) => {
   };
   contacts.push(newContact);
 
-  return res.json(contacts);
+  return res.json({ message: "Contact created" });
 });
 
 server.put("/contacts/:id", (req, res) => {
@@ -64,26 +64,22 @@ server.put("/contacts/:id", (req, res) => {
   const { name, phone, email } = req.body;
 
   const contactIndex = contacts.findIndex((contact) => contact.id === id);
-  contacts[contactIndex] = {
-    ...contacts[contactIndex],
-    name,
-    phone,
-    email,
-  };
+  contacts[contactIndex] = { ...contacts[contactIndex], name, phone, email };
 
   return res.json({ message: "Contact updated" });
 });
 
 server.delete("/contacts/:id", (req, res) => {
   const { id } = req.params;
-  const contactIndex = contacts.findIndex(
-    (contact) => contact.id === id,
-    console.log(contact.id)
+
+  const response = contacts.findIndex((contact) => contact.id === id);
+
+  contacts.splice(response, 1);
+
+  return res.json(
+    // { message: "Contact Deleted " }
+    response
   );
-
-  contacts.splice(contactIndex, 1);
-
-  return res.json(id);
 });
 
 server.listen(5000);
