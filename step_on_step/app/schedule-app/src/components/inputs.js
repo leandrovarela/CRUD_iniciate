@@ -50,7 +50,6 @@ const ContactRenders = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setContacts(data);
-        console.log(data);
       })
       .finally(() => {
         setLoad(false);
