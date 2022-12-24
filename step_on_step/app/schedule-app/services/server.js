@@ -2,9 +2,13 @@ const express = require("express");
 
 const dbJson = require("./db.json");
 
+const cors = require("cors");
+
 const server = express();
 
 server.use(express.json());
+
+server.use(cors());
 
 const contacts = dbJson;
 
@@ -66,4 +70,4 @@ server.delete("/contacts/:id", (req, res) => {
   return res.json({ message: "Contact Deleted " });
 });
 
-server.listen(5000);
+server.listen(5200);

@@ -23,7 +23,7 @@ const ContactRenders = () => {
 
     setLoad(true);
 
-    fetch("http://localhost:5000/contacts", {
+    fetch("http://localhost:5200/contacts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,12 +44,13 @@ const ContactRenders = () => {
   };
 
   const getContacts = () => {
-    fetch("http://localhost:5000/contacts/", {
+    fetch("http://localhost:5200/contacts/", {
       method: "GET",
     })
       .then((resp) => resp.json())
       .then((data) => {
         setContacts(data);
+        console.log(data);
       })
       .finally(() => {
         setLoad(false);
@@ -59,7 +60,7 @@ const ContactRenders = () => {
   const deleteContact = (id) => {
     setLoad(true);
 
-    fetch(`http://localhost:5000/contacts/${id}`, {
+    fetch(`http://localhost:5200/contacts/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +78,7 @@ const ContactRenders = () => {
     const { id, name, phone, email } = currentContact;
     setLoad(true);
 
-    fetch(`http://localhost:5000/contacts/${id}`, {
+    fetch(`http://localhost:5200/contacts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
