@@ -165,6 +165,7 @@ const ContactRenders = () => {
   return (
     <>
       <div className="form-input" display="flex">
+        <label> Name </label>
         <TextField
           value={currentContact.name}
           onChange={(e) =>
