@@ -12,7 +12,7 @@ const theme = createTheme();
 export default function Form() {
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="ls">
+      <Container component="main" maxWidth="md">
         <CssBaseline />
         <Box
           sx={{
@@ -26,9 +26,8 @@ export default function Form() {
             Varela's Contacts
           </Typography>
         </Box>
-        <Box className="contacts-inputs-form">
-          <ContactRenders />
-        </Box>
+        <Box className="contacts-inputs-form"></Box>
+        <ContactRenders />
       </Container>
       <Copyright />
     </ThemeProvider>

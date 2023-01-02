@@ -2,106 +2,175 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, TextField } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import React, { useState } from "react";
-import contacts from "../database/db";
+import React, { useEffect, useState } from "react";
+import Load from "./load";
 
-const columns = [
-  { field: "name", headerName: "Name", width: 400, editable: true },
-  { field: "email", headerName: "Email", width: 300, editable: true },
-  {
-    field: "phone",
-    headerName: "Phone",
-    width: 200,
-    type: "String",
-    editable: true,
-  },
-
-  {
-    field: "edit",
-    headerName: "Edit",
-    type: "actions",
-    width: 100,
-    getActions: (row) => [
-      <GridActionsCellItem
-        //onClick={updateContact(row.id)}
-        icon={<EditIcon />}
-        label="Edit"
-      />,
-    ],
-  },
-  {
-    field: "delete",
-    headerName: "Delete",
-    type: "actions",
-    width: 100,
-
-    getActions: (row) => [
-      <GridActionsCellItem
-        onClick={() => deleteContact(row.id)}
-        icon={<DeleteIcon />}
-        label="Delete"
-      />,
-    ],
-  },
-];
+const clearContact = {
+  id: "",
+  name: "",
+  phone: "",
+  email: "",
+};
 
 const ContactRenders = () => {
-  // Hooks for getInputs
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [rows, setRows] = useState(contacts);
+  const [contacts, setContacts] = useState([]);
+  const [currentContact, setCurrentContact] = useState(clearContact);
+  const [refresh, setRefresh] = useState(false);
+  const [load, setLoad] = useState(true);
 
-  //Create Function Delete
-  const deleteContact = (id) => {
-    setRows((prevRows) => prevRows.filter((rows) => rows.id !== id));
+  const createContact = () => {
+    const { name, phone, email } = currentContact;
+
+    setLoad(true);
+
+    fetch("http://localhost:5200/contacts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: Date.now().toFixed(0),
+        name: name,
+        phone: phone,
+        email: email,
+      }),
+    })
+      .then(() => {
+        setRefresh((prev) => !prev);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
   };
 
-  //Create Funtion Update
+  const getContacts = () => {
+    fetch("http://localhost:5200/contacts/", {
+      method: "GET",
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setContacts(data);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  };
 
-  //const updateContact = useCallback(
-  // (id) => () => {
-  // setRows((oldRows) =>
-  //   oldRows.filter((array) => array.id.indexOf("id") !== -1)
-  // );
-  // console.log(setRows(id));
-  //},
-  //[]
-  //);
+  const deleteContact = (id) => {
+    setLoad(true);
 
-  // Function for Create Contacts
-  const createContact = () => {
-    const newContact = { id: Date.now() * Math.random(), name, phone, email };
-    const contact_temp = [...rows];
+    fetch(`http://localhost:5200/contacts/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        setRefresh((prev) => !prev);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  };
 
-    contact_temp.push(newContact);
+  const updateContact = () => {
+    const { id, name, phone, email } = currentContact;
+    setLoad(true);
 
-    console.log(newContact);
-    if (typeof newContact !== "undefined") setRows(contact_temp);
+    fetch(`http://localhost:5200/contacts/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        name,
+        phone,
+        email,
+      }),
+    })
+      .then(() => {
+        setRefresh((prev) => !prev);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  };
+
+  const handleClearInputs = () => {
+    setCurrentContact(clearContact);
   };
 
   const handleSubmit = () => {
-    createContact();
+    handleClearInputs();
+
+    if (currentContact.id) {
+      updateContact();
+    } else {
+      createContact(currentContact);
+    }
   };
 
-  // fetch("http://localhost:5000/contacts/", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // })
-  //   .then((resp) => resp.json())
-  //   .then((data) => {
-  //     id, name(data), phone(data), email(data);
-  //   })
-  //   .catch((err) => console.log(err));
+  const handleUpdate = (id) => {
+    const index = contacts.findIndex((contact) => contact.id === id);
+    const contact = contacts[index];
+
+    setCurrentContact(contact);
+  };
+
+  const columns = [
+    { field: "name", headerName: "Name", width: 300, editable: true },
+    {
+      field: "phone",
+      headerName: "Phone",
+      width: 170,
+      type: "String",
+      editable: true,
+    },
+    { field: "email", headerName: "Email", width: 230, editable: true },
+
+    {
+      field: "edit",
+      headerName: "Edit",
+      type: "actions",
+      width: 50,
+      getActions: (e) => [
+        <GridActionsCellItem
+          onClick={() => handleUpdate(e.id)}
+          icon={<EditIcon />}
+          label="Edit"
+        />,
+      ],
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      type: "actions",
+      width: 70,
+
+      getActions: (e) => [
+        <GridActionsCellItem
+          onClick={() => deleteContact(e.id)}
+          icon={<DeleteIcon />}
+          label="Delete"
+        />,
+      ],
+    },
+  ];
+
+  useEffect(() => {
+    getContacts();
+  }, [refresh]);
 
   return (
     <>
-      <div className="form-input">
-        <label>Name </label>
+      <div className="form-input" display="flex">
+        <label> Name </label>
         <TextField
-          onChange={(e) => setName(e.target.value)}
+          value={currentContact.name}
+          onChange={(e) =>
+            setCurrentContact((prev) => ({ ...prev, name: e.target.value }))
+          }
           margin="normal"
           required
           fullWidth
@@ -113,7 +182,10 @@ const ContactRenders = () => {
         />
         <label>Phone </label>
         <TextField
-          onChange={(e) => setPhone(e.target.value)}
+          value={currentContact.phone}
+          onChange={(e) =>
+            setCurrentContact((prev) => ({ ...prev, phone: e.target.value }))
+          }
           margin="normal"
           required
           fullWidth
@@ -125,7 +197,10 @@ const ContactRenders = () => {
         />
         <label>Email </label>
         <TextField
-          onChange={(e) => setEmail(e.target.value)}
+          value={currentContact.email}
+          onChange={(e) =>
+            setCurrentContact((prev) => ({ ...prev, email: e.target.value }))
+          }
           margin="normal"
           required
           fullWidth
@@ -138,7 +213,7 @@ const ContactRenders = () => {
         <Button
           type="submit"
           id="button"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit()}
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
@@ -147,12 +222,16 @@ const ContactRenders = () => {
         </Button>
       </div>
       <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[1]}
-        />
+        {load && <Load size={300} />}
+        {!load && (
+          <DataGrid
+            display="flex"
+            rows={contacts}
+            columns={columns}
+            pageSize={20}
+            rowsPerPageOptions={[6]}
+          />
+        )}
       </div>
     </>
   );
