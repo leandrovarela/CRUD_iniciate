@@ -24,12 +24,13 @@
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
+ 
   "scripts": {
-    "start": "react-scripts start",
-    "express": "nodemon ./services/server.js localhost 5200",
+    "start": "react-scripts start", 
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "nodemon": "nodemon ./services/server.js localhost 5200"
   },
   "eslintConfig": {
     "extends": [

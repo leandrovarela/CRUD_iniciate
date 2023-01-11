@@ -1,17 +1,3 @@
-const express = require("express");
-
-const dbJson = require("./db.json");
-
-const cors = require("cors");
-
-const server = express();
-
-server.use(express.json());
-
-server.use(cors());
-
-const contacts = dbJson;
-
 const { Pool, Client } = require("pg");
 
 const pool = new Pool({
@@ -29,6 +15,19 @@ pool.connect((err) => {
     console.log("connected");
   }
 });
+const express = require("express");
+
+const database = require(Client);
+
+const cors = require("cors");
+
+const server = express();
+
+server.use(express.json());
+
+server.use(cors());
+
+const contacts = database;
 
 server.get("/contacts", (req, res) => {
   return res.json(contacts);
