@@ -1,7 +1,5 @@
 const { Pool, Client } = require("pg");
 
-export const temp = Client;
-
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
