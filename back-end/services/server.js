@@ -1,13 +1,3 @@
-const { Pool, Client } = require("pg");
-
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "contacts",
-  password: "custelinha",
-  port: 5432,
-});
-
 pool.connect((err) => {
   if (err) {
     console.error("connection error", err.stack);
@@ -15,9 +5,9 @@ pool.connect((err) => {
     console.log("connected");
   }
 });
-const express = require("express");
-
 const database = require(Client);
+
+const express = require("express");
 
 const cors = require("cors");
 
