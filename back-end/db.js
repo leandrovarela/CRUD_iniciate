@@ -1,5 +1,7 @@
 const { Pool, Client } = require("pg");
 
+export const temp = Client;
+
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
@@ -12,6 +14,6 @@ pool.connect((err) => {
   if (err) {
     console.error("connection error", err.stack);
   } else {
-    console.log("connected");
+    console.log("connected in database the varelinha");
   }
 });
