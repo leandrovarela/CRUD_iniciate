@@ -6,7 +6,7 @@ const server = express();
 
 server.use(express.json());
 
-const database = require(".db.json");
+const database = require("./db.json");
 
 server.use(cors());
 
