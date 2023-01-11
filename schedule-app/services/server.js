@@ -12,6 +12,24 @@ server.use(cors());
 
 const contacts = dbJson;
 
+const { Pool, Client } = require("pg");
+
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "contacts",
+  password: "custelinha",
+  port: 5432,
+});
+
+pool.connect((err) => {
+  if (err) {
+    console.error("connection error", err.stack);
+  } else {
+    console.log("connected");
+  }
+});
+
 server.get("/contacts", (req, res) => {
   return res.json(contacts);
 });
