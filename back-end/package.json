@@ -6,13 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon",
-    "nodemon": "nodemon ./src/server.js localhost 5200"
+    "nodemon": "nodemon ./server.js localhost 5200"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "express": "^4.18.2",
     "nodemon": "^2.0.20",
     "pg": "^8.8.0"
   }
