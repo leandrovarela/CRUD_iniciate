@@ -2,18 +2,18 @@ const express = require("express");
 
 const cors = require("cors");
 
+const database = require("./db.js");
+
 const server = express();
 
 server.use(express.json());
-
-const database = require("./db.json");
 
 server.use(cors());
 
 const contacts = database;
 
 server.get("/contacts", (req, res) => {
-  return res.json(contacts);
+  return res.json(contacts.pool);
 });
 
 server.get("/contacts/:id", (req, res) => {

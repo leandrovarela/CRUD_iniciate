@@ -1,9 +1,5 @@
 const { Pool } = require("pg");
 
-const temp = Client;
-
-console.log(temp);
-
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
